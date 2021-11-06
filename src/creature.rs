@@ -14,6 +14,7 @@ pub struct Creature {
     pub shots: usize,
     pub amount: usize,
     pub is_flying: bool,
+    pub is_attacers: bool,
     pub pol_x: usize,
     pub pol_y: usize,
 }
@@ -32,6 +33,7 @@ impl Creature {
         shots: usize,
         amount: usize,
         is_flying: bool,
+        is_attacers: bool,
         pol_x: usize,
         pol_y: usize,
     ) -> Self {
@@ -48,6 +50,7 @@ impl Creature {
             shots,
             amount,
             is_flying,
+            is_attacers,
             pol_x,
             pol_y,
         }

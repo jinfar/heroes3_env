@@ -31,8 +31,19 @@ impl Battle{
     }
 
     pub fn initial_queue(&mut self){
-        self.queue = self.attacker.creatures.clone();
-        self.queue.append(&mut self.defender.creatures);
+        let mut temp = vec![];
+        let mut temp_d = vec![];
+        for mut i in self.attacker.creatures.clone(){
+            i.is_attacers = true;
+            temp.push(i);
+        }
+        for mut i in self.defender.creatures.clone(){
+            i.is_attacers = false;
+            temp_d.push(i);
+        }
+        // temp = temp.iter().map(|x| x.is_attacers = true).collect();
+        self.queue = temp;
+        self.queue.append(&mut temp_d);
         self.sort_queue();
 
     }
@@ -57,7 +68,7 @@ impl Battle{
 fn main() {
     println!("Hello, world!");
     let mut hero_a = Hero::new(1, 1, 0, 0);
-    let angel = Creature::new("Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, 0, 0);
+    let angel = Creature::new("Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0);
     hero_a.add_creature(angel);
     let mut hero_d = Hero::new(1, 1, 0, 0);
     let mut map = Pole {
@@ -66,6 +77,5 @@ fn main() {
         bariers: vec![[5, 3]],
     };
     let mut scena = Battle::new(hero_a, hero_d, map); 
-    dbg!(&scena.queue);
     dbg!(&scena.queue);
 }
