@@ -1,4 +1,14 @@
 #![allow(dead_code)]
+// use std::collections::HashMap;
+
+// let mut slovar = HashMap::new();
+
+
+// pub struct Slovar{
+    // peasant: ("Peasant, 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0"),
+// }
+
+
 
 #[derive(Clone, Debug)]
 pub struct Creature {

@@ -29,16 +29,23 @@ impl Battle{
         a.initial_queue();
         a
     }
-
     pub fn initial_queue(&mut self){
         let mut temp = vec![];
         let mut temp_d = vec![];
+        let mut counter: usize = 0;
         for mut i in self.attacker.creatures.clone(){
             i.is_attacers = true;
+            i.pol_x = 1;
+            i.pol_y = counter;
+            counter = if counter<5 || counter>6 {counter + 2} else {counter +1}; 
             temp.push(i);
         }
+        counter = 0;
         for mut i in self.defender.creatures.clone(){
             i.is_attacers = false;
+            i.pol_x = 15;
+            i.pol_y = counter;
+            counter = if counter<5 || counter>6 {counter + 2} else {counter +1}; 
             temp_d.push(i);
         }
         // temp = temp.iter().map(|x| x.is_attacers = true).collect();
