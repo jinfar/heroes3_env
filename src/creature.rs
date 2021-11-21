@@ -75,3 +75,25 @@ impl Creature {
         }
     }
 }
+impl Default for Creature{
+    fn default() -> Self {
+        Self{
+            name : "Peasant".to_string(),
+            attack: 0,
+            defence: 0,
+            damage_min: 1,
+            damage_max: 2,
+            health_max: 1,
+            health_current: 1,
+            speed: 4,
+            size: 1,
+            shots: 0,
+            amount: 1,
+            is_flying: false,
+            is_attacers: true,
+            pol_x: 0,
+            pol_y: 0,
+        }
+    }
+
+}
