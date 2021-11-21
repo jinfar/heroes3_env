@@ -78,11 +78,13 @@ impl Battle {
         self.queue.sort_by_key(|k| k.speed);
     }
     pub fn check_dist(
+        & self,
         first_pos_x: usize,
         first_pos_y: usize,
         second_pos_x: usize,
         second_pos_y: usize,
     ) -> usize {
+        dbg!(first_pos_x, first_pos_y, second_pos_x, second_pos_y);
         let dist = (first_pos_x as i64 - second_pos_x as i64).abs()
             + (first_pos_y as i64 - second_pos_y as i64).abs();
         dist as usize
@@ -102,14 +104,25 @@ impl Battle {
         self.queue.push(temp);
         self.finish_creature_move();
     }
-    fn finish_creature_move(&mut self){
+    fn finish_creature_move(&mut self) {
         let temp = self.queue.pop().unwrap();
         self.next_move_queue.push(temp);
-
     }
-    fn moving(&mut self, pos_x: usize, pos_y: usize){
-        todo!("Dvizhenie sushestv");
-
+    fn moving(&mut self, pos_x: usize, pos_y: usize) {
+        let mut temp = self.queue.pop().unwrap();
+        let speed = temp.speed;
+        let dist = self.check_dist(temp.pol_x, temp.pol_y, pos_x, pos_y);
+        dbg!(speed, dist);
+        if dist <= speed {
+            temp.pol_x = pos_x;
+            temp.pol_y = pos_y;
+            self.queue.push(temp);
+            self.finish_creature_move();
+        }
+        else{
+            self.queue.push(temp);
+        }
+        todo!("KAK ZAKANCHIVAT HOD?");
     }
 }
 
@@ -122,6 +135,6 @@ fn main() {
     let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map);
     dbg!(&scena.queue);
-    scena.defend();
+    scena.moving(15,11);
     dbg!(&scena.queue);
 }
