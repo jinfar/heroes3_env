@@ -18,6 +18,15 @@ struct Battle{
     queue: Vec<Creature>,
 }
 
+impl Default for Pole{
+    fn default() -> Self {
+        Self{
+            field_x: 15,
+            field_y: 11,
+            bariers: vec![],
+        }
+    }
+}
 impl Battle{
     pub fn new(attacker: Hero, defender: Hero, map: Pole)->Self{
         let mut a = Self {
@@ -95,7 +104,9 @@ fn main() {
         bariers: vec![[5, 3]],
     };
     let mut scena = Battle::new(hero_a, hero_d, map); 
-    dbg!(&scena.queue);
+    let map2 = Pole::default();
+    dbg!(map2);
+    // dbg!(&scena.queue);
     scena.defend();
-    dbg!(&scena.queue);
+    // dbg!(&scena.queue);
 }
