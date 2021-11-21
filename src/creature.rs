@@ -4,20 +4,19 @@
 
 // let mut slovar = HashMap::new();
 
-
 // pub struct Slovar{
-    // peasant: ("Peasant, 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0"),
+// peasant: ("Peasant, 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0"),
 // }
 
 pub fn get_creature(imya: &str) -> Creature {
     let x = match imya {
-        "Angel" => Creature::new("Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0),
+        "Angel" => Creature::new(
+            "Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0,
+        ),
         _ => Creature::new("Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0),
     };
     x
 }
-
-
 
 #[derive(Clone, Debug)]
 pub struct Creature {
@@ -75,10 +74,10 @@ impl Creature {
         }
     }
 }
-impl Default for Creature{
+impl Default for Creature {
     fn default() -> Self {
-        Self{
-            name : "Peasant".to_string(),
+        Self {
+            name: "Peasant".to_string(),
             attack: 0,
             defence: 0,
             damage_min: 1,
@@ -95,5 +94,4 @@ impl Default for Creature{
             pol_y: 0,
         }
     }
-
 }
