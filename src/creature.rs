@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+
 // use std::collections::HashMap;
 
 // let mut slovar = HashMap::new();
@@ -7,6 +8,14 @@
 // pub struct Slovar{
     // peasant: ("Peasant, 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0"),
 // }
+
+pub fn get_creature(imya: &str) -> Creature {
+    let x = match imya {
+        "Angel" => Creature::new("Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0),
+        _ => Creature::new("Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0),
+    };
+    x
+}
 
 
 

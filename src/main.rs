@@ -70,12 +70,23 @@ impl Battle{
     pub fn hod(&mut self, id: usize, pos_x: usize, pos_y: usize) -> usize {
         todo!("Move it, Move it");
     }
+    pub fn wait(&mut self){
+        assert!(self.queue.len() > 0);
+        let temp = self.queue.pop().unwrap();
+        self.queue.insert(0,temp);
+    }
+    pub fn defend(&mut self){
+        // dbg!(self.queue.last().unwrap().defence);
+        let mut temp = self.queue.pop().unwrap();
+        temp.defence= (temp.defence as f64 * 1.3).floor() as usize;
+        self.queue.push(temp);
+    }
 }
 
 fn main() {
     println!("Hello, world!");
     let mut hero_a = Hero::new(1, 1, 0, 0);
-    let angel = Creature::new("Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0);
+    let angel = creature::get_creature("Angel");
     hero_a.add_creature(angel);
     let mut hero_d = Hero::new(1, 1, 0, 0);
     let mut map = Pole {
@@ -84,5 +95,7 @@ fn main() {
         bariers: vec![[5, 3]],
     };
     let mut scena = Battle::new(hero_a, hero_d, map); 
+    dbg!(&scena.queue);
+    scena.defend();
     dbg!(&scena.queue);
 }
