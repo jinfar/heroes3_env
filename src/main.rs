@@ -98,14 +98,8 @@ fn main() {
     let angel = creature::get_creature("Angel");
     hero_a.add_creature(angel);
     let mut hero_d = Hero::new(1, 1, 0, 0);
-    let mut map = Pole {
-        field_x: 15,
-        field_y: 11,
-        bariers: vec![[5, 3]],
-    };
+    let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map); 
-    let map2 = Pole::default();
-    dbg!(map2);
     // dbg!(&scena.queue);
     scena.defend();
     // dbg!(&scena.queue);
