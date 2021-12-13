@@ -78,7 +78,7 @@ impl Battle {
         self.queue.sort_by_key(|k| k.speed);
     }
     pub fn check_dist(
-        & self,
+        &self,
         first_pos_x: usize,
         first_pos_y: usize,
         second_pos_x: usize,
@@ -89,8 +89,10 @@ impl Battle {
             + (first_pos_y as i64 - second_pos_y as i64).abs();
         dist as usize
     }
-    pub fn hod(&mut self, id: usize, pos_x: usize, pos_y: usize) -> usize {
-        todo!("Move it, Move it");
+    pub fn hod(&mut self) {
+        while (self.queue > 0) {
+            todo!()
+        }
     }
     pub fn wait(&mut self) {
         assert!(self.queue.len() > 0);
@@ -112,14 +114,12 @@ impl Battle {
         let mut temp = self.queue.pop().unwrap();
         let speed = temp.speed;
         let dist = self.check_dist(temp.pol_x, temp.pol_y, pos_x, pos_y);
-        dbg!(speed, dist);
         if dist <= speed {
             temp.pol_x = pos_x;
             temp.pol_y = pos_y;
             self.queue.push(temp);
             self.finish_creature_move();
-        }
-        else{
+        } else {
             self.queue.push(temp);
         }
         todo!("KAK ZAKANCHIVAT HOD?");
@@ -135,6 +135,6 @@ fn main() {
     let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map);
     dbg!(&scena.queue);
-    scena.moving(15,11);
+    scena.moving(15, 11);
     dbg!(&scena.queue);
 }
