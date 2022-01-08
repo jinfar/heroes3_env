@@ -11,7 +11,7 @@ pub struct Hero {
 impl Hero {
     pub fn new(attack: usize, defence: usize, knowledge: usize, spell_power: usize) -> Self {
         let mut x: Vec<Creature> = vec![];
-        let peasant = Creature::new("Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0);
+        let peasant = Creature::new("Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0, false);
         x.push(peasant);
         Self {
             attack,
@@ -26,4 +26,31 @@ impl Hero {
             self.creatures.push(x);
         }
     }
+}
+#[derive(Clone, Debug)]
+pub enum Deistvie {
+   Move,
+   Attack,
+   Defence,
+   Wait,
+   SpecialAbility
+
+}
+
+#[derive(Clone, Debug)]
+pub struct Action{
+    deistvie: Deistvie,
+    target: [usize; 2] 
+}
+impl Action{
+    pub fn new(dei: Deistvie, tar: [usize; 2]) -> Self {
+        Self{
+           deistvie: dei,
+           target: tar,
+        }
+    }
+}
+
+pub struct PosibbleActions{
+    list: Vec<Action>
 }

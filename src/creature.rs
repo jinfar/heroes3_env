@@ -11,12 +11,14 @@
 pub fn get_creature(imya: &str) -> Creature {
     let x = match imya {
         "Angel" => Creature::new(
-            "Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0,
-        ),
-        _ => Creature::new("Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0),
+            "Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0, false),
+        _ => Creature::new("Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0, false),
     };
     x
 }
+
+
+
 
 #[derive(Clone, Debug)]
 pub struct Creature {
@@ -35,6 +37,7 @@ pub struct Creature {
     pub is_attacers: bool,
     pub pol_x: usize,
     pub pol_y: usize,
+    pub already_waited: bool,
 }
 
 impl Creature {
@@ -54,6 +57,7 @@ impl Creature {
         is_attacers: bool,
         pol_x: usize,
         pol_y: usize,
+        already_waited: bool,
     ) -> Self {
         Self {
             name: name.to_string(),
@@ -71,6 +75,7 @@ impl Creature {
             is_attacers,
             pol_x,
             pol_y,
+            already_waited,
         }
     }
 }
@@ -92,6 +97,6 @@ impl Default for Creature {
             is_attacers: true,
             pol_x: 0,
             pol_y: 0,
+            already_waited: false,
         }
-    }
-}
+    } }
