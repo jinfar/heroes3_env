@@ -3,7 +3,7 @@ mod creature;
 use creature::Creature;
 mod hero;
 use hero::*;
-
+mod test;
 
 const DEF_MULTI: f64 = 1.3;
 const POLE_SIZE_X: usize = 15;
@@ -84,55 +84,93 @@ impl Battle {
         self.queue = temp;
         self.queue.append(&mut temp_d);
         self.sort_queue();
+        // define Current moving creature
         self.current_unit = self.queue.pop().unwrap();
     }
     pub fn sort_queue(&mut self) {
         //sort units in queue by their speed
         self.queue.sort_by_key(|k| k.speed);
     }
-    pub fn get_dist(&self, first_pos_x: usize, first_pos_y: usize,  second_pos_x: usize, second_pos_y: usize) -> usize{
+    pub fn get_dist(
+        &self,
+        first_pos_x: usize,
+        first_pos_y: usize,
+        second_pos_x: usize,
+        second_pos_y: usize,
+    ) -> usize {
         // dbg!(first_pos_x, first_pos_y, second_pos_x, second_pos_y);
         let dist = (first_pos_x as isize - second_pos_x as isize).abs()
             + (first_pos_y as isize - second_pos_y as isize).abs();
         dist as usize
     }
-
-    pub fn hod(&mut self) {
-        self.current_unit = self.queue.pop().unwrap();
+    pub fn end_of_move(&mut self){
+        if self.queue.len()>0 {
+            self.next_move_queue.push(self.current_unit.clone());
+            self.current_unit = self.queue.pop().unwrap();
+        }
+        else{
+            self.end_of_round();
+        }
+    }
+    pub fn end_of_round(&mut self){
         todo!();
     }
-    pub fn zanatie_kletki(&self) -> Vec<[usize; 2]>{
+
+
+
+    pub fn hod(&mut self, action: Action) { 
+        todo!("Vibor deistviya");
+        match action.deistvie {
+            defence => self.defend(),
+            _ => panic!("Impossible action")
+                
+
+        }
+    }
+
+    pub fn zanatie_kletki(&self) -> Vec<[usize; 2]> {
+        // Returns field of map which contains bariers or units
         let mut itog = vec![];
-        for bar in self.map.bariers.clone(){
+        for bar in self.map.bariers.clone() {
             itog.push(bar);
         }
-        for unit in self.queue.clone(){
+        for unit in self.queue.clone() {
             itog.push([unit.pol_x, unit.pol_y]);
         }
         itog
     }
-    pub fn return_actions(&self) -> Vec<Action>{
+
+    pub fn return_actions(&self) -> Vec<Action> {
         // List vozmozhnix deistviy
         let mut ret = Vec::new();
         // zanatue unitami kletki
         let barieri = self.zanatie_kletki();
         // polozhenie unitov oppa
-        let s: Vec<[usize;2]>= self.queue.clone().into_iter()
-        .filter(|x| x.is_attacers != self.current_unit.is_attacers)
-        .map(|x| [x.pol_x, x.pol_y])
-        .collect();
+        let spisok_vragov: Vec<[usize; 2]> = self
+            .queue
+            .clone()
+            .into_iter()
+            .filter(|x| x.is_attacers != self.current_unit.is_attacers)
+            .map(|x| [x.pol_x, x.pol_y])
+            .collect();
 
-        ret.push(Action::new(Deistvie::Wait, [0,0]));
-        ret.push(Action::new(Deistvie::Defence, [0,0]));
-        for pole_x in 0..POLE_SIZE_X{
-            for pole_y in 0..POLE_SIZE_Y{
-                if (self.get_dist(self.current_unit.pol_x, self.current_unit.pol_y,pole_x, pole_y) <= self.current_unit.speed) & 
-                !barieri.contains(&[pole_x,pole_y]){
+        ret.push(Action::new(Deistvie::Wait, [0, 0]));
+        ret.push(Action::new(Deistvie::Defence, [0, 0]));
+        for pole_x in 0..POLE_SIZE_X {
+            for pole_y in 0..POLE_SIZE_Y {
+                if (self.get_dist(
+                    self.current_unit.pol_x,
+                    self.current_unit.pol_y,
+                    pole_x,
+                    pole_y,
+                ) <= self.current_unit.speed)
+                    & !barieri.contains(&[pole_x, pole_y])
+                {
                     ret.push(Action::new(Deistvie::Move, [pole_x, pole_y]));
-                    for enemy in &s{
-                        if self.get_dist(enemy[0], enemy[1], pole_x, pole_y) == 1  {
+                    for enemy in &spisok_vragov {
+                        if self.get_dist(enemy[0], enemy[1], pole_x, pole_y) == 1 {
                             ret.push(Action::new(Deistvie::Attack, [pole_x, pole_y]));
-                        } 
+                        }
                     }
                 }
             }
@@ -140,22 +178,17 @@ impl Battle {
         ret
     }
 
-
     pub fn wait(&mut self) {
-        let temp = self.queue.pop().unwrap();
-        self.queue.insert(0, temp);
+        self.queue.insert(0, self.current_unit.clone());
+        self.end_of_move();
     }
     pub fn defend(&mut self) {
         // dbg!(self.queue.last().unwrap().defence);
         // Defend move add defense to unit and skip move
-        let mut temp = self.queue.pop().unwrap();
+        let mut temp = self.current_unit.clone();
         temp.defence = (temp.defence as f64 * DEF_MULTI).floor() as usize;
-        self.queue.push(temp);
-        self.finish_creature_move();
-    }
-    fn finish_creature_move(&mut self) {
-        let temp = self.queue.pop().unwrap();
-        self.next_move_queue.push(temp);
+        self.current_unit = temp;
+        self.end_of_move();
     }
 }
 
@@ -168,5 +201,5 @@ fn main() {
     let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map);
     scena.initial_queue();
-    dbg!(scena.return_actions());
+    dbg!(scena.return_actions().len());
 }

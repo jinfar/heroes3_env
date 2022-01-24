@@ -39,8 +39,8 @@ pub enum Deistvie {
 
 #[derive(Clone, Debug)]
 pub struct Action{
-    deistvie: Deistvie,
-    target: [usize; 2] 
+    pub deistvie: Deistvie,
+    pub target: [usize; 2] 
 }
 impl Action{
     pub fn new(dei: Deistvie, tar: [usize; 2]) -> Self {
