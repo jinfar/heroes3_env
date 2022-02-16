@@ -71,6 +71,7 @@ impl Battle {
         }
 
         counter = 0;
+        idx = 7;
         // place creatures of defender on the field
         for mut i in self.defender.creatures.clone() {
             idx = idx + 1;
@@ -204,10 +205,9 @@ impl Battle {
         self.initial_queue();
         self.choose_cur_unit();
     }
-    pub fn get_state(&self) {
-
-        
-
+    pub fn get_state(&self)  -> Vec<usize>{
+        let state : Vec<usize>= self.queue.iter().map(|x| x.id).collect();
+        state
     }
 }
 
@@ -226,4 +226,5 @@ fn main() {
     scena.render();
     dbg!(scena.return_actions().len());
     dbg!(scena.return_enemies_vec().len());
+    dbg!(scena.get_state());
 }

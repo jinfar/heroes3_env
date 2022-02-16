@@ -57,7 +57,7 @@ mod test {
         let mut scena = crate::Battle::new(hero_a, hero_d, map);
         assert!(
             scena.return_enemies_vec().len() == 3,
-            "Proverka kolichestva vragov 2"
+            "Proverka kolichestva vragov 3"
         );
     }
 }

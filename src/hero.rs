@@ -11,7 +11,7 @@ pub struct Hero {
 impl Hero {
     pub fn new(attack: usize, defence: usize, knowledge: usize, spell_power: usize) -> Self {
         let mut x: Vec<Creature> = vec![];
-        let peasant = Creature::new("Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0, false);
+        let peasant = Creature::new("Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0, false, 0);
         x.push(peasant);
         Self {
             attack,
