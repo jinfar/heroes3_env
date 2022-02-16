@@ -45,7 +45,7 @@ impl Battle {
             next_move_queue: vec![],
             current_unit: Creature::default(),
         };
-        temp.initial_queue();
+        temp.render();
         temp
     }
     pub fn initial_queue(&mut self) {
@@ -55,10 +55,13 @@ impl Battle {
         let mut temp_d = vec![];
         let mut counter: usize = 0;
         // place creatures of attacker on the field
+        let mut idx: usize = 0;
         for mut i in self.attacker.creatures.clone() {
+            idx = idx + 1;
             i.is_attacers = true;
             i.pol_x = 1;
             i.pol_y = counter;
+            i.id = idx;
             counter = if counter < 5 || counter > 6 {
                 counter + 2
             } else {
@@ -70,9 +73,11 @@ impl Battle {
         counter = 0;
         // place creatures of defender on the field
         for mut i in self.defender.creatures.clone() {
+            idx = idx + 1;
             i.is_attacers = false;
             i.pol_x = 15;
             i.pol_y = counter;
+            i.id = idx;
             counter = if counter < 5 || counter > 6 {
                 counter + 2
             } else {
@@ -84,6 +89,8 @@ impl Battle {
         self.queue = temp;
         self.queue.append(&mut temp_d);
         self.sort_queue();
+    }
+    pub fn choose_cur_unit(&mut self){
         // define Current moving creature
         self.current_unit = self.queue.pop().unwrap();
     }
@@ -103,28 +110,23 @@ impl Battle {
             + (first_pos_y as isize - second_pos_y as isize).abs();
         dist as usize
     }
-    pub fn end_of_move(&mut self){
-        if self.queue.len()>0 {
+    pub fn end_of_move(&mut self) {
+        if self.queue.len() > 0 {
             self.next_move_queue.push(self.current_unit.clone());
             self.current_unit = self.queue.pop().unwrap();
-        }
-        else{
+        } else {
             self.end_of_round();
         }
     }
-    pub fn end_of_round(&mut self){
+    pub fn end_of_round(&mut self) {
         todo!();
     }
 
-
-
-    pub fn hod(&mut self, action: Action) { 
+    pub fn hod(&mut self, action: Action) {
         todo!("Vibor deistviya");
         match action.deistvie {
             defence => self.defend(),
-            _ => panic!("Impossible action")
-                
-
+            _ => panic!("Impossible action"),
         }
     }
 
@@ -138,6 +140,14 @@ impl Battle {
             itog.push([unit.pol_x, unit.pol_y]);
         }
         itog
+    }
+    pub fn return_enemies_vec(&self) -> Vec<Creature>{
+        self
+        .queue
+        .clone()
+        .into_iter()
+        .filter(|x| x.is_attacers != self.current_unit.is_attacers)
+        .collect()
     }
 
     pub fn return_actions(&self) -> Vec<Action> {
@@ -190,16 +200,30 @@ impl Battle {
         self.current_unit = temp;
         self.end_of_move();
     }
+    pub fn render(&mut self){
+        self.initial_queue();
+        self.choose_cur_unit();
+    }
+    pub fn get_state(&self) {
+
+        
+
+    }
 }
 
 fn main() {
     println!("Hello, world!");
     let mut hero_a = Hero::new(1, 1, 0, 0);
     let angel = creature::get_creature("Angel");
-    hero_a.add_creature(angel);
+    hero_a.add_creature(angel.clone());
     let mut hero_d = Hero::new(1, 1, 0, 0);
+    hero_d.add_creature(angel.clone());
+    dbg!(hero_d.creatures.clone());
+    hero_d.add_creature(creature::get_creature("Angel"));
+    dbg!(hero_d.creatures.clone());
     let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map);
-    scena.initial_queue();
+    scena.render();
     dbg!(scena.return_actions().len());
+    dbg!(scena.return_enemies_vec().len());
 }
