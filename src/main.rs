@@ -206,7 +206,11 @@ impl Battle {
         self.choose_cur_unit();
     }
     pub fn get_state(&self)  -> Vec<usize>{
-        let state : Vec<usize>= self.queue.iter().map(|x| x.id).collect();
+        // How to push names?
+        let mut state : Vec<usize> = vec![];
+        for unit in &self.queue {
+            state.append(&mut unit.to_vec());
+        }
         state
     }
 }

@@ -81,6 +81,26 @@ impl Creature {
             id,
         }
     }
+    pub fn to_vec(&self) -> Vec<usize>{
+        let mut s = vec![];
+        s.push(self.attack);
+        s.push(self.defence);
+        s.push(self.damage_min);
+        s.push(self.damage_max);
+        s.push(self.health_max);
+        s.push(self.health_current);
+        s.push(self.speed);
+        s.push(self.size);
+        s.push(self.shots);
+        s.push(self.amount);
+        s.push(self.is_flying as usize);
+        s.push(self.is_attacers as usize);
+        s.push(self.pol_x);
+        s.push(self.pol_y);
+        s.push(self.already_waited as usize);
+        s.push(self.id);
+        s
+    }
 }
 impl Default for Creature {
     fn default() -> Self {
