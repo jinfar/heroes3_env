@@ -212,23 +212,22 @@ impl Battle {
             state.append(&mut unit.to_vec());
         }
         state
+        //state.resize(20, 0)
     }
 }
 
 fn main() {
     println!("Hello, world!");
-    let mut hero_a = Hero::new(1, 1, 0, 0);
+    let mut hero_a = Hero::default();
     let angel = creature::get_creature("Angel");
     hero_a.add_creature(angel.clone());
-    let mut hero_d = Hero::new(1, 1, 0, 0);
+    let mut hero_d = Hero::default();
     hero_d.add_creature(angel.clone());
-    dbg!(hero_d.creatures.clone());
     hero_d.add_creature(creature::get_creature("Angel"));
-    dbg!(hero_d.creatures.clone());
     let map = Pole::default();
     let mut scena = Battle::new(hero_a, hero_d, map);
     scena.render();
-    dbg!(scena.return_actions().len());
-    dbg!(scena.return_enemies_vec().len());
+    // dbg!(scena.return_actions().len());
+    // dbg!(scena.return_enemies_vec().len());
     dbg!(scena.get_state());
 }

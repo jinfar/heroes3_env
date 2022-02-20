@@ -16,6 +16,9 @@ pub fn get_creature(imya: &str) -> Creature {
     };
     x
 }
+pub fn get_empty() -> Creature{
+    Creature::new("Empty", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, 0, 0, false, 0)
+}
 
 
 
