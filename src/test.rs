@@ -1,8 +1,10 @@
 #[cfg(test)]
 mod test {
+    use crate::hero::Hero;
+    use crate::battle::Battle;
     #[test]
     fn dobavlenie_sushestv() {
-        let mut hero_a = crate::hero::Hero::default();
+        let mut hero_a = Hero::default();
         assert_eq!(
             hero_a.creatures[0].name, "Peasant",
             "Proverka dobavleniya sushestv - HeroA pesant"
@@ -16,12 +18,12 @@ mod test {
     }
     #[test]
     fn check_speed_in_queue() {
-        let mut hero_a = crate::hero::Hero::default();
+        let mut hero_a = Hero::default();
         let angel = crate::creature::get_creature("Angel");
         hero_a.add_creature(angel);
-        let mut hero_d = crate::hero::Hero::default();
+        let mut hero_d = Hero::default();
         let map = crate::Pole::default();
-        let mut scena = crate::Battle::new(hero_a, hero_d, map);
+        let mut scena = Battle::new(hero_a, hero_d, map);
         assert!(
             scena.queue[0].speed >= scena.queue[1].speed,
             "Proverka sckorosti pervix sushestv v ocheredi"
@@ -29,12 +31,12 @@ mod test {
     }
     #[test]
     fn check_amount_of_moves() {
-        let mut hero_a = crate::hero::Hero::default();
+        let mut hero_a = Hero::default();
         let angel = crate::creature::get_creature("Angel");
         hero_a.add_creature(angel);
-        let mut hero_d = crate::hero::Hero::default();
+        let mut hero_d = Hero::default();
         let map = crate::Pole::default();
-        let mut scena = crate::Battle::new(hero_a, hero_d, map);
+        let mut scena = Battle::new(hero_a, hero_d, map);
         assert!(
             scena.return_actions().len() == 157,
             "Proverka kolichestva hodov"
@@ -42,19 +44,19 @@ mod test {
     }
     #[test]
     fn check_enemies_dist() {
-        let mut hero_a = crate::hero::Hero::default();
+        let mut hero_a = Hero::default();
         let angel = crate::creature::get_creature("Angel");
         hero_a.add_creature(angel);
-        let mut hero_d = crate::hero::Hero::default();
+        let mut hero_d = Hero::default();
         let map = crate::Pole::default();
-        let mut scena = crate::Battle::new(hero_a.clone(), hero_d.clone(), map.clone());
+        let mut scena = Battle::new(hero_a.clone(), hero_d.clone(), map.clone());
         assert!(
             scena.return_enemies_vec().len() == 1,
             "Proverka kolichestva vragov 1"
         );
         hero_d.add_creature(crate::creature::get_creature("Peasant"));
         hero_d.add_creature(crate::creature::get_creature("Peasant"));
-        let mut scena = crate::Battle::new(hero_a, hero_d, map);
+        let mut scena = Battle::new(hero_a, hero_d, map);
         assert!(
             scena.return_enemies_vec().len() == 3,
             "Proverka kolichestva vragov 3"
