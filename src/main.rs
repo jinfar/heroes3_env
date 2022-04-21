@@ -100,6 +100,7 @@ impl Battle {
         self.queue.sort_by_key(|k| k.speed);
     }
     pub fn get_dist(
+        &self,
         first_pos_x: usize,
         first_pos_y: usize,
         second_pos_x: usize,
