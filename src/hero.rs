@@ -1,5 +1,6 @@
 use crate::creature::Creature;
 
+
 #[derive(Clone, Debug)]
 pub struct Hero {
     pub attack: usize,
@@ -70,5 +71,5 @@ impl Action{
 }
 
 pub struct PosibbleActions{
-    list: Vec<Action>
+    list: Vec<Action>,
 }
