@@ -105,10 +105,9 @@ impl Battle {
     }
 
     pub fn hod(&mut self, action: Action) {
-        todo!("Vibor deistviya");
         match action.deistvie {
-            defence => self.defend(),
-            _ => panic!("Impossible action"),
+            _defence => self.defend(),
+            // _ => panic!("Impossible action"),
         }
     }
 
