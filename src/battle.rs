@@ -1,10 +1,10 @@
+use crate::creature::Creature;
 use crate::hero::*;
 use crate::pole::Pole;
-use crate::creature::Creature;
 
+use crate::DEF_MULTI;
 use crate::POLE_SIZE_X;
 use crate::POLE_SIZE_Y;
-use crate::DEF_MULTI;
 
 #[derive(Clone, Debug)]
 pub struct Battle {
@@ -72,7 +72,7 @@ impl Battle {
         self.queue.append(&mut temp_d);
         self.sort_queue();
     }
-    pub fn choose_cur_unit(&mut self){
+    pub fn choose_cur_unit(&mut self) {
         // define Current moving creature
         self.current_unit = self.queue.pop().unwrap();
     }
@@ -104,11 +104,21 @@ impl Battle {
         todo!();
     }
 
-    pub fn hod(&mut self, action: Action) {
-        match action.deistvie {
-            _defence => self.defend(),
-            // _ => panic!("Impossible action"),
-        }
+    pub fn hod(&mut self) {
+        self.choose_cur_unit();
+        let action_list = self.return_actions();
+        let act = self.select_action(action_list);
+
+        // match action.deistvie {
+        //     _defence => self.defend(),
+        // _ => panic!("Impossible action"),
+        // }
+    }
+
+    pub fn select_action(&mut self, actions: Vec<Action>) -> Action {
+        let index = rand::random_range(..actions.len());
+        let itog = actions.get(index).ok_or(0).unwrap();
+        return itog.to_owned();
     }
 
     pub fn zanatie_kletki(&self) -> Vec<[usize; 2]> {
@@ -122,13 +132,12 @@ impl Battle {
         }
         itog
     }
-    pub fn return_enemies_vec(&self) -> Vec<Creature>{
-        self
-        .queue
-        .clone()
-        .into_iter()
-        .filter(|x| x.is_attacers != self.current_unit.is_attacers)
-        .collect()
+    pub fn return_enemies_vec(&self) -> Vec<Creature> {
+        self.queue
+            .clone()
+            .into_iter()
+            .filter(|x| x.is_attacers != self.current_unit.is_attacers)
+            .collect()
     }
 
     pub fn return_actions(&self) -> Vec<Action> {
@@ -136,7 +145,7 @@ impl Battle {
         let mut ret = Vec::new();
         // zanatue unitami kletki
         let barieri = self.zanatie_kletki();
-        // polozhenie unitov oppa
+        // polozhenie unitovoppa
         let spisok_vragov: Vec<[usize; 2]> = self
             .queue
             .clone()
@@ -181,13 +190,13 @@ impl Battle {
         self.current_unit = temp;
         self.end_of_move();
     }
-    pub fn render(&mut self){
+    pub fn init_battle(&mut self) {
         self.initial_queue();
         self.choose_cur_unit();
     }
-    pub fn get_state(&self)  -> Vec<usize>{
+    pub fn get_state(&self) -> Vec<usize> {
         // How to push names?
-        let mut state : Vec<usize> = vec![];
+        let mut state: Vec<usize> = vec![];
         for unit in &self.queue {
             state.append(&mut unit.to_vec());
         }
@@ -195,4 +204,3 @@ impl Battle {
         //state.resize(20, 0)
     }
 }
-

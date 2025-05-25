@@ -1,6 +1,5 @@
 use crate::creature::Creature;
 
-
 #[derive(Clone, Debug)]
 pub struct Hero {
     pub attack: usize,
@@ -12,17 +11,26 @@ pub struct Hero {
     pub creatures: Vec<Creature>,
 }
 impl Hero {
-    pub fn new(attack: usize, defence: usize, knowledge: usize, spell_power: usize, mana_max: usize, mana_cur: usize) -> Self {
+    pub fn new(
+        attack: usize,
+        defence: usize,
+        knowledge: usize,
+        spell_power: usize,
+        mana_max: usize,
+        mana_cur: usize,
+    ) -> Self {
         let mut x: Vec<Creature> = vec![];
-        let peasant = Creature::new("Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0, false, 0);
+        let peasant = Creature::new(
+            "Peasant", 1, 1, 1, 2, 10, 10, 4, 1, 0, 1, false, true, 0, 0, false, 0,
+        );
         x.push(peasant);
         Self {
             attack,
             defence,
             knowledge,
             spell_power,
-            mana_max, 
-            mana_cur, 
+            mana_max,
+            mana_cur,
             creatures: x,
         }
     }
@@ -31,10 +39,10 @@ impl Hero {
             self.creatures.push(x);
         }
     }
-    pub fn default() -> Self{
-        Self::new(1,1,1,1,10,10)
+    pub fn default() -> Self {
+        Self::new(1, 1, 1, 1, 10, 10)
     }
-    pub fn to_vec(&self) -> Vec<usize>{
+    pub fn to_vec(&self) -> Vec<usize> {
         let mut temp = vec![];
         temp.push(self.mana_cur);
         temp.push(self.mana_max);
@@ -43,33 +51,31 @@ impl Hero {
         temp.push(self.defence);
         temp.push(self.attack);
         temp
-
     }
 }
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Deistvie {
-   Move,
-   Attack,
-   Defence,
-   Wait,
-   SpecialAbility
-
+    Move,
+    Attack,
+    Defence,
+    Wait,
+    SpecialAbility,
 }
 
 #[derive(Clone, Debug)]
-pub struct Action{
+pub struct Action {
     pub deistvie: Deistvie,
-    pub target: [usize; 2] 
+    pub target: [usize; 2],
 }
-impl Action{
+impl Action {
     pub fn new(dei: Deistvie, tar: [usize; 2]) -> Self {
-        Self{
-           deistvie: dei,
-           target: tar,
+        Self {
+            deistvie: dei,
+            target: tar,
         }
     }
 }
 
-pub struct PosibbleActions{
+pub struct PosibbleActions {
     list: Vec<Action>,
 }

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
-    use crate::hero::Hero;
     use crate::battle::Battle;
+    use crate::hero::Hero;
     #[test]
     fn dobavlenie_sushestv() {
         let mut hero_a = Hero::default();

@@ -11,17 +11,19 @@
 pub fn get_creature(imya: &str) -> Creature {
     let x = match imya {
         "Angel" => Creature::new(
-            "Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0, false, 0),
-        _ => Creature::new("Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0, false, 0),
+            "Angel", 20, 20, 50, 50, 150, 150, 17, 1, 0, 1, true, true, 0, 0, false, 0,
+        ),
+        _ => Creature::new(
+            "Peasant", 0, 0, 1, 2, 1, 1, 4, 1, 0, 1, false, true, 0, 0, false, 0,
+        ),
     };
     x
 }
-pub fn get_empty() -> Creature{
-    Creature::new("Empty", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, 0, 0, false, 0)
+pub fn get_empty() -> Creature {
+    Creature::new(
+        "Empty", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, false, 0, 0, false, 0,
+    )
 }
-
-
-
 
 #[derive(Clone, Debug)]
 pub struct Creature {
@@ -62,7 +64,7 @@ impl Creature {
         pol_x: usize,
         pol_y: usize,
         already_waited: bool,
-        id: usize
+        id: usize,
     ) -> Self {
         Self {
             name: name.to_string(),
@@ -84,7 +86,7 @@ impl Creature {
             id,
         }
     }
-    pub fn to_vec(&self) -> Vec<usize>{
+    pub fn to_vec(&self) -> Vec<usize> {
         let mut s = vec![];
         s.push(self.attack);
         s.push(self.defence);
@@ -124,6 +126,7 @@ impl Default for Creature {
             pol_x: 0,
             pol_y: 0,
             already_waited: false,
-            id: 0
+            id: 0,
         }
-    } }
+    }
+}
