@@ -26,7 +26,7 @@ impl Battle {
             next_move_queue: vec![],
             current_unit: Creature::default(),
         };
-        temp.render();
+        // temp.render();
         temp
     }
     pub fn initial_queue(&mut self) {
