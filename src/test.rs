@@ -20,8 +20,9 @@ mod test {
     fn check_speed_in_queue() {
         let mut hero_a = Hero::default();
         let angel = crate::creature::get_creature("Angel");
-        hero_a.add_creature(angel);
+        hero_a.add_creature(angel.clone());
         let mut hero_d = Hero::default();
+        hero_d.add_creature(angel);
         let map = crate::Pole::default();
         let mut scena = Battle::new(hero_a, hero_d, map);
         assert!(
@@ -33,10 +34,13 @@ mod test {
     fn check_amount_of_moves() {
         let mut hero_a = Hero::default();
         let angel = crate::creature::get_creature("Angel");
+        dbg!(hero_a.clone());
         hero_a.add_creature(angel);
+        dbg!(hero_a.clone());
         let mut hero_d = Hero::default();
         let map = crate::Pole::default();
         let mut scena = Battle::new(hero_a, hero_d, map);
+        println!("Kolichestvo hodov: {}", scena.return_actions().len());
         assert!(
             scena.return_actions().len() == 157,
             "Proverka kolichestva hodov"

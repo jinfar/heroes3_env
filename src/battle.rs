@@ -27,6 +27,7 @@ impl Battle {
             current_unit: Creature::default(),
         };
         // temp.render();
+        temp.init_battle();
         temp
     }
     pub fn initial_queue(&mut self) {
@@ -153,6 +154,7 @@ impl Battle {
             .filter(|x| x.is_attacers != self.current_unit.is_attacers)
             .map(|x| [x.pol_x, x.pol_y])
             .collect();
+        dbg!(self.current_unit.speed.clone());
 
         ret.push(Action::new(Deistvie::Wait, [0, 0]));
         ret.push(Action::new(Deistvie::Defence, [0, 0]));
@@ -166,6 +168,7 @@ impl Battle {
                 ) <= self.current_unit.speed)
                     & !barieri.contains(&[pole_x, pole_y])
                 {
+                    // println!("{} {}", pole_x.clone(), pole_y.clone());
                     ret.push(Action::new(Deistvie::Move, [pole_x, pole_y]));
                     for enemy in &spisok_vragov {
                         if self.get_dist(enemy[0], enemy[1], pole_x, pole_y) == 1 {
@@ -175,6 +178,7 @@ impl Battle {
                 }
             }
         }
+        // dbg!(ret.clone());
         ret
     }
 
