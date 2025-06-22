@@ -154,7 +154,6 @@ impl Battle {
             .filter(|x| x.is_attacers != self.current_unit.is_attacers)
             .map(|x| [x.pol_x, x.pol_y])
             .collect();
-        dbg!(self.current_unit.speed.clone());
 
         ret.push(Action::new(Deistvie::Wait, [0, 0]));
         ret.push(Action::new(Deistvie::Defence, [0, 0]));
